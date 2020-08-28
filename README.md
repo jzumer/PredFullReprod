@@ -1,5 +1,7 @@
+# Reproducing the PredFull model
+
 This repo contains code to reproduce the [PredFull model](https://github.com/lkytal/PredFull) as per its [paper](https://pubs.acs.org/doi/10.1021/acs.analchem.9b04867).
-The model provided by the author in their repository (linked above) differs from the paper, so the former is used (I was not able to get a working model when attempting to transcribe the paper's model literally: the model simply overfits after reaching 0.20 cosine similarity on the validation set).
+The model provided by the authors in their repository (linked above) differs from the paper, so the former is used (I was not able to get a working model when attempting to transcribe the paper's model literally: the model simply overfits after reaching 0.20 cosine similarity on the validation set).
 
 ## Preparations
 
