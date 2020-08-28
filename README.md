@@ -9,7 +9,7 @@ The model provided by the authors in their repository (linked above) differs fro
 
 ## Reproduction
 
-- Download data from [the PredFull website](www.predfull.com/datasets)
+- Download data from [the PredFull website](https://www.predfull.com/datasets)
 - Run `predfull_data_to_h5.py infile outfile` where `outfile` to preprocess the mgf file and save is as hdf5
 - [Optional] Download the `pm.h5` pretrained model from [the PredFull repository](https://github.com/lkytal/PredFull)
 - Set `DATA`, `PRETRAINED`, `USE_PRETRAINED`, `RESET_PRETRAINED` and `FMT` parameters in the `predfull_keras.py` script as desired as per the instructions in the script
