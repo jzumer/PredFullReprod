@@ -1,0 +1,4 @@
+tqdm
+tensorflow-gpu
+numpy
+pytables
