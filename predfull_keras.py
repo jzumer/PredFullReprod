@@ -36,7 +36,7 @@ if len(sys.argv) > 1:
     LOAD = FMT.format(PHASE-1)
 
     if PHASE == 0:
-        LOAD = None
+        LOAD = None if not USE_PRETRAINED else PRETRAINED
         LR = 3e-4
         N_EPS = 30
     elif PHASE == 1:
@@ -159,27 +159,26 @@ ku.get_custom_objects().update({"cos_metric": cos_metric})
 
 if REPROD and (LOAD is not None):
     pm2 = k.models.load_model(LOAD, compile=0)
+    if USE_PRETRAINED and RESET_PRETRAINED:
+        for layer in pm2.layers:
+            params = []
+            if hasattr(layer, 'kernel_initializer'): 
+                w = layer.kernel_initializer(layer.weights[0].shape)
+                params.append(w)
+            if hasattr(layer, 'bias_initializer'):
+                b = layer.bias_initializer(layer.weights[1].shape)
+                params.append(b)
+            if len(params) > 0:
+                layer.set_weights(params)
 else:
-    if USE_PRETRAINED:
-        pm2 = k.models.load_model(PRETRAINED, compile=0)
-        if RESET_PRETRAINED:
-            for layer in pm2.layers:
-                params = []
-                if hasattr(layer, 'kernel_initializer'): 
-                    w = layer.kernel_initializer(layer.weights[0].shape)
-                    params.append(w)
-                if hasattr(layer, 'bias_initializer'):
-                    b = layer.bias_initializer(layer.weights[1].shape)
-                    params.append(b)
-                if len(params) > 0:
-                    layer.set_weights(params)
-
     ipt, opt = make_model()
     pm2 = k.models.Model(ipt, opt)
 
 pm2.compile(optimizer=k.optimizers.Adam(lr=LR if REPROD else 1e-3), loss=cos_loss, metrics=[cos_metric])
 
 pm2.summary()
+print()
+print(f"Parameters for this run: phase = {PHASE}; Using pretrained model: {USE_PRETRAINED}; Reset pretrained params: {RESET_PRETRAINED}; learning rate: {LR}; Load filename: {LOAD}; Save filename: {SAVE}; Dataset: {DATA}")
 
 def blit(mz_list, itensity_list, mass, bin_size, charge): #spectra2vector as copied from the PredFull repo
     itensity_list = itensity_list / numpy.max(itensity_list)
