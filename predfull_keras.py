@@ -27,6 +27,10 @@ PRETRAINED = "pm.h5" # Pretrained model to use, only relevant if USE_PRETRAINED 
 DATA = "ProteomeTools.h5" # Dataset to use, as prepared by `predfull_data_to_h5.py`
 
 REPROD = False
+PHASE = None
+LR = None
+LOAD = None
+SAVE = None
 if len(sys.argv) > 1:
     PHASE = int(sys.argv[1])
     REPROD = True
@@ -148,7 +152,7 @@ def make_model():
     out = res(out)
 
     out = k.layers.Conv1D(2000*10, 1, activation=None, padding='same')(out)
-    out = k.layers.Activation('relu')(out)
+    out = k.layers.Activation('sigmoid')(out)
     out = k.layers.GlobalAveragePooling1D()(out)
 
     return inp, out

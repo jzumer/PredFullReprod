@@ -18,4 +18,5 @@ The model provided by the authors in their repository (linked above) differs fro
 Omitting the `PHASE` parameter just trains the model endlessly with a set learning rate, it's meant to be customized as needed or used as an examnple for something more serious.
 
 ## Current Status
-Model summary is identical between the model from the repository and this model, but this model fails to reach the same performance as a retrained pretrained model.
+Model summary is identical between the model from the repository and this model, and training proceeds similarly. Some activation functions may differ.
+A script was provided by the paper's first author for refernce for model creation, although it may not completely matched the released model. It is available as `build_model_example.py`.
